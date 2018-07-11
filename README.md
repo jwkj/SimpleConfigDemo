@@ -6,7 +6,7 @@
 ## 2.使用    
 * 初始化SimpleConfigM.getInstance(MyApp.app).init();    
 * 开始发送
-   /**
+```java
      * 开始发包
      *
      * @param ssid     WiFi的SSID
@@ -15,6 +15,7 @@
      */
     public void send(String ssid, String pwd, String phoneMac) {
    }
+```
 * 停止发送 
   SimpleConfigM.getInstance(MyApp.app).stop();
 * 退出
