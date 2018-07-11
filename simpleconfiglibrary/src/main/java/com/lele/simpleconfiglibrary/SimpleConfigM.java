@@ -68,6 +68,24 @@ public class SimpleConfigM {
                 SCLibrary.PacketSendTimeIntervalMs = 10; //10ms
             }
             sCLib.rtk_sc_reset();
+            /**
+             * 参数说明
+             * ssid                 wifi的ssid
+             * passwd               wfifi密码
+             * pin
+             * bssid
+             * pkt_type
+             * issoftap
+             * total_time           Profile(SSID+PASSWORD, contain many packets)sending total time(ms).Default: 120000 ms (2 minutes)
+             * old_mode_time        Configuring by using old mode(0~ TotalConfigTimeMs)before new mode(the remaining time)Default: 30000ms(30s)
+             * profile_rounds       Profile continuous sending rounds.Default: 1
+             * profile_interval     Time interval(ms) between sending two rounds of profiles.Default: 1000ms
+             * packet_interval      Time interval(ms) between sending two packets.Default: 0ms
+             * packet_counts        The count to send each packet of a profile .Default: 1, Bigger than 1 is used for transfer reliability.
+             * hostip
+             * wifi_interface
+             * phoneMac
+             */
             sCLib.rtk_sc_start(ssid, pwd, "57289961", "", true,
                     true, 120000, 0, (byte) 1, 1000,
                     SCLibrary.PacketSendTimeIntervalMs, (byte) 1, "", "", phoneMac);

@@ -1,15 +1,9 @@
 apply plugin: 'com.android.library'
-apply plugin: 'com.github.dcendents.android-maven'
-group = 'com.github.fangxiaole'
-
 android {
     compileSdkVersion 26
-
-
-
     defaultConfig {
         minSdkVersion 15
-        targetSdkVersion 26
+        targetSdkVersion 22
         versionCode 1
         versionName "1.0"
 
@@ -33,6 +27,24 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     compile files('libs/simpleconfiglib.jar')
+}
+/** 以下开始是将Android Library上传到jcenter的相关配置**/
+apply plugin: 'com.novoda.bintray-release'//添加
+//项目主页
+def siteUrl = 'https://github.com/fangxiaole/SimpleConfigDemo'
+publish {
+    repoName = 'maven'//远程仓库名字,不指明，默认是上传到maven
+    userOrg = 'fangxiaole'//bintray.com的用户名
+    groupId = 'com.lele.simpleconfiglibrary'//jcenter上的路径
+    artifactId = 'simpleconfig'//项目名称
+    publishVersion = '1.0.2'//版本号
+    desc = 'simpleconfig配网'//描述，不重要
+    website = siteUrl//项目主页
+}
+tasks.withType(Javadoc) {//防止编码问题
+    options.addStringOption('Xdoclint:none', '-quiet')
+    options.addStringOption('encoding', 'UTF-8')
+    options.addStringOption('charSet', 'UTF-8')
 }
 // 指定编码
 tasks.withType(JavaCompile) {
