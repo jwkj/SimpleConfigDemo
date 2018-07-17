@@ -3,7 +3,6 @@ package com.lele.simpleconfiglibrary;
 import android.content.Context;
 import android.os.Build;
 import android.os.Handler;
-import android.os.Message;
 import android.util.Log;
 
 import com.realtek.simpleconfiglib.SCLibrary;
@@ -31,11 +30,11 @@ public class SimpleConfigM {
     /**
      * 初始化
      */
-    public void init() {
+    public void init(Handler msgHandler) {
         if (sCLib != null) {
             Log.e("leleTest", "SimpleConfig init");
             sCLib.rtk_sc_init();
-            sCLib.TreadMsgHandler = new MsgHandler();
+            sCLib.TreadMsgHandler = msgHandler;
             sCLib.WifiInit(context);
         }
     }
@@ -60,6 +59,13 @@ public class SimpleConfigM {
         }
     }
 
+    /**
+     * 开始发包
+     *
+     * @param ssid     WiFi的SSID
+     * @param pwd      WiFi密码
+     * @param phoneMac mac地址
+     */
     public void send(String ssid, String pwd, String phoneMac) {
         if (sCLib != null) {
             SCLibrary.PacketSendTimeIntervalMs = 0;
@@ -90,46 +96,6 @@ public class SimpleConfigM {
                     true, 120000, 0, (byte) 1, 1000,
                     SCLibrary.PacketSendTimeIntervalMs, (byte) 1, "", "", phoneMac);
 
-        }
-    }
-
-    /**
-     * Handler class to receive send/receive message
-     */
-    private class MsgHandler extends Handler {
-        byte ret;
-
-        @Override
-        public void handleMessage(Message msg) {
-            switch (msg.what) {
-                case ~SCParams.Flag.CfgSuccessACK:
-
-                    break;
-                case SCParams.Flag.CfgSuccessACK:
-
-                    break;
-                case SCParams.Flag.DiscoverACK:
-
-                    break;
-                case ~SCParams.Flag.DiscoverACK:
-
-                    break;
-                case SCParams.Flag.DelProfACK:
-
-                    break;
-                case SCParams.Flag.RenameDevACK:
-
-                    break;
-                case SCParams.Flag.PackFail:
-                    break;
-
-                case SCParams.Flag.CFGTimeSendBack:
-
-                    break;
-
-                default:
-                    break;
-            }
         }
     }
 }

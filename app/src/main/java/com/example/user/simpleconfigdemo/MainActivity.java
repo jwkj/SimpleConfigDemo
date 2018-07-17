@@ -1,10 +1,10 @@
 package com.example.user.simpleconfigdemo;
 
-import android.content.Context;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiInfo;
-import android.net.wifi.WifiManager;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.lele.simpleconfiglibrary.SCParams;
 import com.lele.simpleconfiglibrary.SimpleConfigM;
 
 import java.util.Arrays;
@@ -31,7 +32,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         initUI();
         currentWifi();
-        SimpleConfigM.getInstance(MyApp.app).init();
+        SimpleConfigM.getInstance(MyApp.app).init(new MsgHandler());
     }
 
     private void initUI() {
@@ -42,6 +43,46 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         bt_start.setOnClickListener(this);
 
 
+    }
+
+    /**
+     * Handler class to receive send/receive message
+     */
+    private class MsgHandler extends Handler {
+        byte ret;
+
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case ~SCParams.Flag.CfgSuccessACK:
+
+                    break;
+                case SCParams.Flag.CfgSuccessACK:
+
+                    break;
+                case SCParams.Flag.DiscoverACK:
+
+                    break;
+                case ~SCParams.Flag.DiscoverACK:
+
+                    break;
+                case SCParams.Flag.DelProfACK:
+
+                    break;
+                case SCParams.Flag.RenameDevACK:
+
+                    break;
+                case SCParams.Flag.PackFail:
+                    break;
+
+                case SCParams.Flag.CFGTimeSendBack:
+
+                    break;
+
+                default:
+                    break;
+            }
+        }
     }
 
     @Override
@@ -70,25 +111,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onDestroy() {
         super.onDestroy();
         SimpleConfigM.getInstance(MyApp.app).exit();
-    }
-
-    /**
-     * 通过WiFiManager获取mac地址
-     *
-     * @param context
-     * @return
-     */
-    private static String tryGetWifiMac(Context context) {
-        WifiManager wm = (WifiManager) context.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
-        WifiInfo wi = wm.getConnectionInfo();
-        if (wi == null || wi.getMacAddress() == null) {
-            return null;
-        }
-        if ("02:00:00:00:00:00".equals(wi.getMacAddress().trim())) {
-            return null;
-        } else {
-            return wi.getMacAddress().trim();
-        }
     }
 
     public void currentWifi() {
